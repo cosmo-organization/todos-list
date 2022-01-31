@@ -6,7 +6,7 @@ import { Footer } from './Components/Footer';
 import { useState, useEffect } from 'react';
 import { About } from './Components/About';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
@@ -52,11 +52,11 @@ function App() {
 
   return (
     <>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <Header title="Todo App" baseLink={BASE_LINK} homeLink={BASE_LINK} aboutLink="about" searchBar={false} />
 		<Routes>
-          <Route exact path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}/>
-          <Route exact path="/about" element={<About/>}/>
+          <Route path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}/>
+          <Route path="/about" element={<About/>}/>
         </Routes>
         <Footer />
       </Router>
