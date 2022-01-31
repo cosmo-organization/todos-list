@@ -52,11 +52,11 @@ function App() {
 
   return (
     <>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Header title="Todo App" baseLink={BASE_LINK} homeLink={BASE_LINK} aboutLink="about" searchBar={false} />
-        <Routes>
-          <Route path="/todos-list" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}/>
-          <Route path="/todos-list/about" element={<About/>}/>
+		<Routes>
+          <Route exact path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}/>
+          <Route exact path="/about" element={<About/>}/>
         </Routes>
         <Footer />
       </Router>
