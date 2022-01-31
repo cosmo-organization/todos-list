@@ -24,7 +24,6 @@ export const AddTodo = (props) => {
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
                     <textarea className="form-control" value={desc} onChange={(e)=>setDesc(e.target.value)} id="description"/>
-                    
                 </div>
                 <button type="submit" className="btn btn-success btn-sm">Add Todo</button>
             </form>

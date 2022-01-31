@@ -1,5 +1,3 @@
-
-import React from "react";
 import { TodoItem } from './TodoItem';
 
 
@@ -12,9 +10,13 @@ export const Todos=(props)=>{
         <div className="container my-3" style={todosStyle}>
             <h3 className="my-3">Todos List</h3>
             {
-                props.todos.length === 0? "No Todos yet! Create New":
+                props.todos.length === 0? (
+                    <>
+                     <h2 className='text-center'>No Todos! Create New</h2>
+                    </>
+                ):
                 props.todos.map((todo)=>{
-                    return (<TodoItem todo={todo} key={todo.sno} onDelete={props.onDelete}/>)
+                    return (<TodoItem todo={todo} key={todo.sno} requestChange={props.requestChange} onDelete={props.onDelete}/>)
                 })
             }
         </div>

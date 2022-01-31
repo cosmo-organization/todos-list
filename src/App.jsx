@@ -10,11 +10,17 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import { TodoEditor } from './Components/TodoEditor';
 
 const TODO_STORAGE_KEY = "TODO_KEY_VER1"
 const TODO_STORAGE_LAST_DATE_USED = "TODO_APP_LAST_DATE_USED"
-const BASE_LINK="/todos-list"
+const BASE_LINK = "/todos-list"
+
+
 function App() {
+  const [editable, setEditable] = useState(false)
+  const [editableTodo,setEditableTodo] = useState(null)
+
   let initTodo = null
   if (localStorage.getItem(TODO_STORAGE_KEY) === null) {
     initTodo = []
@@ -34,10 +40,19 @@ function App() {
       sno: sno,
       title: title,
       desc: desc,
-      creationDate: date.toLocaleString()
+      creationDate: date.toLocaleString(),
+      changesCount:0,
+      lastChangeDate:""
     }
     setTodos([...todos, newTodo])
 
+  }
+
+  const requestTodoChange = (todo) =>{
+    if (!editable){
+      setEditable(true)
+      setEditableTodo(todo)
+    }
   }
 
   const onDelete = (todo) => {
@@ -46,17 +61,28 @@ function App() {
     }))
   }
 
+  const changer=() =>{
+    setEditable(false)
+    setEditableTodo(null)
+  }
+
   useEffect(() => {
     localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos))
-  }, [todos]);
+  }, [todos,editable,editableTodo]);
 
   return (
     <>
       <Router>
         <Header title="Todo App" baseLink={BASE_LINK} homeLink={BASE_LINK} aboutLink="about" searchBar={false} />
-		<Routes>
-          <Route path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}/>
-          <Route path="/about" element={<About/>}/>
+        <Routes>
+          {
+            !editable?
+            <Route path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} requestChange={requestTodoChange} onDelete={onDelete} /></>} />:
+            <Route path="/" element={<>
+              <TodoEditor currentTodo={editableTodo} title={editableTodo.title} desc={editableTodo.desc} changer={changer}></TodoEditor>
+            </>}/>
+          }
+          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </Router>
