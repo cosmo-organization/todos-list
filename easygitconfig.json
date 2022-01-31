@@ -2,7 +2,7 @@
 	"EasyGitConfigData":{
 		"user-name":{
 			"dtype":"media/text",
-			"value":"cosmo-developer",
+			"value":"cosmo-organization",
 			"ask":"on",
 			"mode":"gui"
 		},
