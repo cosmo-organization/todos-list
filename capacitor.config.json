@@ -1,0 +1,8 @@
+{
+  "appId": "org.cosmo.todolist",
+  "appName": "TodoList",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
