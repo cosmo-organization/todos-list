@@ -8,12 +8,12 @@ import { About } from './Components/About';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 const TODO_STORAGE_KEY = "TODO_KEY_VER1"
 const TODO_STORAGE_LAST_DATE_USED = "TODO_APP_LAST_DATE_USED"
+const BASE_LINK="/todos-list"
 function App() {
   let initTodo = null
   if (localStorage.getItem(TODO_STORAGE_KEY) === null) {
@@ -42,7 +42,7 @@ function App() {
 
   const onDelete = (todo) => {
     setTodos(todos.filter((e) => {
-      return e != todo
+      return e !== todo
     }))
   }
 
@@ -53,12 +53,10 @@ function App() {
   return (
     <>
       <Router>
-        <Header title="Todo App" searchBar={false} />
+        <Header title="Todo App" baseLink={BASE_LINK} homeLink={BASE_LINK} aboutLink="about" searchBar={false} />
         <Routes>
-          <Route exact path="/todos-list" element={<>
-            <AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}>
-          </Route>
-          <Route exact path="/todos-list/about" element={<About/>}/>
+          <Route path="/todos-list" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} onDelete={onDelete} /></>}/>
+          <Route path="/todos-list/about" element={<About/>}/>
         </Routes>
         <Footer />
       </Router>
