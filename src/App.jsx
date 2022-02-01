@@ -11,6 +11,7 @@ import {
   Route
 } from "react-router-dom";
 import { TodoEditor } from './Components/TodoEditor';
+import { FileHandle } from './Components/FileHandle';
 
 const TODO_STORAGE_KEY = "TODO_KEY_VER1"
 const TODO_STORAGE_LAST_DATE_USED = "TODO_APP_LAST_DATE_USED"
@@ -18,8 +19,10 @@ const BASE_LINK = "/todos-list"
 
 
 function App() {
+
+
   const [editable, setEditable] = useState(false)
-  const [editableTodo,setEditableTodo] = useState(null)
+  const [editableTodo, setEditableTodo] = useState(null)
 
   let initTodo = null
   if (localStorage.getItem(TODO_STORAGE_KEY) === null) {
@@ -41,15 +44,15 @@ function App() {
       title: title,
       desc: desc,
       creationDate: date.toLocaleString(),
-      changesCount:0,
-      lastChangeDate:""
+      changesCount: 0,
+      lastChangeDate: ""
     }
     setTodos([...todos, newTodo])
 
   }
 
-  const requestTodoChange = (todo) =>{
-    if (!editable){
+  const requestTodoChange = (todo) => {
+    if (!editable) {
       setEditable(true)
       setEditableTodo(todo)
     }
@@ -61,14 +64,14 @@ function App() {
     }))
   }
 
-  const changer=() =>{
+  const changer = () => {
     setEditable(false)
     setEditableTodo(null)
   }
 
   useEffect(() => {
     localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos))
-  }, [todos,editable,editableTodo]);
+  }, [todos, editable, editableTodo]);
 
   return (
     <>
@@ -76,13 +79,14 @@ function App() {
         <Header title="Todo App" baseLink={BASE_LINK} homeLink={BASE_LINK} aboutLink="about" searchBar={false} />
         <Routes>
           {
-            !editable?
-            <Route path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} requestChange={requestTodoChange} onDelete={onDelete} /></>} />:
-            <Route path="/" element={<>
-              <TodoEditor currentTodo={editableTodo} title={editableTodo.title} desc={editableTodo.desc} changer={changer}></TodoEditor>
-            </>}/>
+            !editable ?
+              <Route path="/" element={<><AddTodo addTodo={addTodo} /><Todos todos={todos} requestChange={requestTodoChange} onDelete={onDelete} /></>} /> :
+              <Route path="/" element={<>
+                <TodoEditor currentTodo={editableTodo} title={editableTodo.title} desc={editableTodo.desc} changer={changer}></TodoEditor>
+              </>} />
           }
           <Route path="/about" element={<About />} />
+          <Route path="/file" element={<FileHandle />} />
         </Routes>
         <Footer />
       </Router>

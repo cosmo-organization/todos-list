@@ -1,16 +1,20 @@
 import { useState } from "react";
 
 export const TodoEditor = (props) => {
-    const [title,setTitle]=useState(props.title)
-    const [desc,setDesc]=useState(props.desc)
-
-    const submit=(e)=>{
+    const [title, setTitle] = useState(props.title)
+    const [desc, setDesc] = useState(props.desc)
+    const previousTitle = props.currentTodo.title
+    const previousDesc = props.currentTodo.desc
+    const submit = (e) => {
         e.preventDefault()
+        
+        if (previousTitle === title && previousDesc === desc) {console.log("testing")} else {
+            props.currentTodo.title = title
+            props.currentTodo.desc = desc
+            props.currentTodo.lastChangeDate = new Date().toLocaleString()
+            props.currentTodo.changesCount = props.currentTodo.changesCount + 1
+        }
         props.changer()
-        props.currentTodo.title=title
-        props.currentTodo.desc=desc
-        props.currentTodo.lastChangeDate=new Date().toLocaleString()
-        props.currentTodo.changesCount=props.currentTodo.changesCount+1
     }
 
     return (<div className="container my-3">
@@ -26,6 +30,7 @@ export const TodoEditor = (props) => {
 
             </div>
             <button type="submit" className="btn btn-success btn-sm">Save Change</button>
+
         </form>
     </div>);
 };
