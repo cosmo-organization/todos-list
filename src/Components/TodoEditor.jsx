@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 export const TodoEditor = (props) => {
     const [title, setTitle] = useState(props.title)
     const [desc, setDesc] = useState(props.desc)
@@ -7,8 +6,9 @@ export const TodoEditor = (props) => {
     const previousDesc = props.currentTodo.desc
     const submit = (e) => {
         e.preventDefault()
-        
-        if (previousTitle === title && previousDesc === desc) {console.log("testing")} else {
+        if (previousTitle === title && previousDesc === desc) {
+            // Do nothing if no any single text change
+        } else {
             props.currentTodo.title = title
             props.currentTodo.desc = desc
             props.currentTodo.lastChangeDate = new Date().toLocaleString()
